@@ -2,8 +2,13 @@ import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Gallery from './components/Gallery'
 import SearchBar from './components/SearchBar'
+<<<<<<< HEAD
 import AlbumView from './components/AlbumView'
 import ArtistView from './components/ArtistView'
+=======
+import { DataContext } from './context/DataContext'
+
+>>>>>>> withContext
 
 function App() {
     let [search, setSearch] = useState('')
@@ -33,6 +38,7 @@ function App() {
         setSearch(term)
     }
 
+<<<<<<< HEAD
     return (
       <div>
       {message}
@@ -49,6 +55,37 @@ function App() {
               </Routes>
           </Router>
       </div>
+=======
+  useEffect(() => {
+      if(search) {
+          const fetchData = async () => {
+              document.title = `${search} music`
+              const response = await fetch(API_URL + search)
+              const resData = await response.json()
+              if (resData.results.length > 0) {
+                  return setData(resData.results)
+              } else {
+                  return setMessage('Not Found.')
+              }
+          }
+          fetchData()
+      }
+  }, [search])
+
+  const handleSearch = (e, term) => {
+      e.preventDefault()
+      setSearch(term)
+  }
+
+  return (
+    <div className="App">
+    <SearchBar handleSearch={handleSearch} />
+    {message}
+    <DataContext.Provider value={data} >
+        <Gallery />
+    </DataContext.Provider>
+</div>
+>>>>>>> withContext
   )
   
 
